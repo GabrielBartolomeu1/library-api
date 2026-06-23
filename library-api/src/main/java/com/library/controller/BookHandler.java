@@ -85,7 +85,6 @@ public class BookHandler extends BaseHandler {
 
     private long[] extractTwoIds(String path) {
         String[] parts = path.split("/");
-        // path = "" / "books" / "3" / "categories" / "7"
         return new long[]{Long.parseLong(parts[2]), Long.parseLong(parts[4])};
     }
 }
