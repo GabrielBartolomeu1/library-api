@@ -118,9 +118,6 @@ public class BookRepository implements Repository<Book, Long> {
         }
     }
 
-    /**
-     * Busca todos os livros de um autor específico (relacionamento 1:N).
-     */
     public List<Book> findByAuthorId(Long authorId) {
         String sql = "SELECT * FROM books WHERE author_id = ? ORDER BY title";
         List<Book> books = new ArrayList<>();
@@ -136,11 +133,6 @@ public class BookRepository implements Repository<Book, Long> {
         }
     }
 
-    // ─── Gerenciamento N:N: book_categories ───────────────────────────────────
-
-    /**
-     * Adiciona uma categoria a um livro (N:N).
-     */
     public void addCategory(Long bookId, Long categoryId) {
         String sql = "MERGE INTO book_categories (book_id, category_id) KEY (book_id, category_id) VALUES (?, ?)";
         try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
@@ -152,9 +144,6 @@ public class BookRepository implements Repository<Book, Long> {
         }
     }
 
-    /**
-     * Remove uma categoria de um livro (N:N).
-     */
     public boolean removeCategory(Long bookId, Long categoryId) {
         String sql = "DELETE FROM book_categories WHERE book_id = ? AND category_id = ?";
         try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
@@ -166,9 +155,6 @@ public class BookRepository implements Repository<Book, Long> {
         }
     }
 
-    /**
-     * Remove todas as categorias de um livro.
-     */
     public void clearCategories(Long bookId) {
         String sql = "DELETE FROM book_categories WHERE book_id = ?";
         try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
