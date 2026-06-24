@@ -27,7 +27,16 @@ public class BookService {
     public Book create(Book book) {
         validate(book);
         ensureAuthorExists(book.getAuthorId());
-        return bookRepository.save(book);
+        Book saved = bookRepository.save(book);
+        if (book.getCategoryIds() != null) {
+            for (Long catId : book.getCategoryIds()) {
+                if (!categoryRepository.existsById(catId)) {
+                    throw new NotFoundException("Categoria", catId);
+                }
+                bookRepository.addCategory(saved.getId(), catId);
+            }
+        }
+        return findById(saved.getId());
     }
 
     public Book findById(Long id) {

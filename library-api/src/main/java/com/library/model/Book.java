@@ -1,5 +1,6 @@
 package com.library.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,6 +26,8 @@ public class Book extends BaseEntity {
     private transient Author author;
 
     private transient List<Category> categories = new ArrayList<>();
+    @JsonIgnore
+    private List<Long> categoryIds = new ArrayList<>();
 
     public Book(Long id, String title, String isbn, Integer publicationYear,
                 BigDecimal price, Integer pages, String language, Long authorId) {
