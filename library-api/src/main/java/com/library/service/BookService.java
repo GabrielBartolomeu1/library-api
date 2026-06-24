@@ -68,7 +68,8 @@ public class BookService {
         existing.setAuthorId(updatedData.getAuthorId());
         existing.touch();
 
-        return bookRepository.update(existing);
+        bookRepository.update(existing);
+        return findById(existing.getId());
     }
 
     public boolean delete(Long id) {
